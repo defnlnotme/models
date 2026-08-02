@@ -4,15 +4,15 @@ Hugging Face model downloader script (without huggingface_hub dependency).
 Downloads models with specified quantization, similar to git clone behavior.
 
 Usage:
-    python hf.py <model_name>
-    python hf.py <user>/<model_name>
-    python hf.py <user>/<model_name> --quantization <quant>
-    python hf.py <model_name> --quantization <quant>
+    python hf_no_hub.py <model_name>
+    python hf_no_hub.py <user>/<model_name>
+    python hf_no_hub.py <user>/<model_name> --quantization <quant>
+    python hf_no_hub.py <model_name> --quantization <quant>
 
 Examples:
-    python hf.py llama-2-7b-chat
-    python hf.py microsoft/DialoGPT-medium
-    python hf.py llama-2-7b-chat --quantization Q4_K_M
+    python hf_no_hub.py llama-2-7b-chat
+    python hf_no_hub.py microsoft/DialoGPT-medium
+    python hf_no_hub.py llama-2-7b-chat --quantization Q4_K_M
 """
 
 import argparse
@@ -285,8 +285,7 @@ def download_file(repo_id, filename, local_dir):
     
     response = requests.get(url, headers=headers, stream=True)
     if response.status_code != 200:
-        msg = response.text[:500] if response.text else "No response body"
-        raise Exception(f"HTTP {response.status_code}: {msg}")
+        raise Exception(f"HTTP {response.status_code}: {response.text}")
     
     filepath = Path(local_dir) / filename
     filepath.parent.mkdir(parents=True, exist_ok=True)
@@ -485,12 +484,12 @@ def main():
         description="Download models from Hugging Face Hub with quantization support (no huggingface_hub dependency)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""Examples:
-  hf.py llama-2-7b-chat
-  hf.py microsoft/DialoGPT-medium  
-  hf.py llama-2-7b-chat --quantization Q4_K_M
-  hf.py unsloth/llama-2-7b-bnb-4bit --quantization UD-Q8_0
-  hf.py llama-2-7b-chat --exclude-quantization Q2_K --exclude-quantization Q3_K_S
-  hf.py intel/llama-2-7b-chat-int4-ov --format openvino"""
+  hf_no_hub.py llama-2-7b-chat
+  hf_no_hub.py microsoft/DialoGPT-medium  
+  hf_no_hub.py llama-2-7b-chat --quantization Q4_K_M
+  hf_no_hub.py unsloth/llama-2-7b-bnb-4bit --quantization UD-Q8_0
+  hf_no_hub.py llama-2-7b-chat --exclude-quantization Q2_K --exclude-quantization Q3_K_S
+  hf_no_hub.py intel/llama-2-7b-chat-int4-ov --format openvino"""
     )
     
     parser.add_argument(

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Wrapper script for hf.py that activates the virtual environment
+# Wrapper script for hf_no_hub.py that activates the virtual environment
 
 # Get the directory where this script is located
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -8,7 +8,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VENV_PATH="$SCRIPT_DIR/../.venv"
 
 # Path to the Python script
-PYTHON_SCRIPT="$SCRIPT_DIR/hf.py"
+PYTHON_SCRIPT="$SCRIPT_DIR/hf_no_hub.py"
 
 # Check if virtual environment exists
 if [ ! -d "$VENV_PATH" ]; then
